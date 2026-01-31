@@ -9,20 +9,27 @@ const nodemailer = require('nodemailer');
 // Création du transporteur SMTP
 const createTransporter = () => {
   const host = process.env.SMTP_HOST || 'smtp.gmail.com';
-  const port = Number(process.env.SMTP_PORT) || 587;
+  const port = Number(process.env.SMTP_PORT) || 465; // On privilégie 465
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
 
   if (!user || !pass) {
-    console.warn('⚠️  SMTP_USER ou SMTP_PASS non défini. Les emails ne seront pas envoyés.');
+    console.warn('⚠️ SMTP_USER ou SMTP_PASS non défini.');
     return null;
   }
 
   return nodemailer.createTransport({
     host,
     port,
-    secure: port === 465,
+    secure: port === 465, // true pour 465, false pour les autres
     auth: { user, pass },
+    // AJOUT DE CES OPTIONS POUR ÉVITER LE TIMEOUT
+    connectionTimeout: 10000, // 10 secondes max pour se connecter
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
+    tls: {
+      rejectUnauthorized: false // Permet de passer outre certaines restrictions réseau de Render
+    }
   });
 };
 
