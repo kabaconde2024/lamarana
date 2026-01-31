@@ -14,7 +14,7 @@ const notificationsRoutes = require("./routes/notifications");
 const uploadRoutes = require("./routes/upload");
 const { errorHandler, notFoundHandler } = require("./middleware/errorHandler");
 const app = express();
-
+const contactRoutes = require("./routes/contact");
 app.disable("x-powered-by");
 app.use(morgan("dev"));
 app.use(express.json({ limit: '10mb' })); // Limite de taille pour éviter les attaques
@@ -55,7 +55,7 @@ app.use("/api/stats", statsRoutes);
 app.use("/api/favorites", favoritesRoutes);
 app.use("/api/notifications", notificationsRoutes);
 app.use("/api/upload", uploadRoutes);
-
+app.use("/api/contact", contactRoutes); // <--- AJOUTE CETTE LIGNE ICI
 // --- Frontend static hosting ---
 // In production, serve the built React app from frontend/dist
 // In dev, React runs on Vite (port 5173) with proxy to backend (port 3000)

@@ -11,26 +11,6 @@ const router = express.Router();
  * Envoie un email à l'admin et un SMS d'alerte
  */
 
-router.post("/contact", async (req, res) => {
-  const { name, email, subject, message } = req.body;
-  const { sendEmail } = require("../services/mailer");
-
-  try {
-    await sendEmail({
-      to: process.env.ADMIN_EMAIL,
-      subject: `[CONTACT] ${subject} - de ${name}`,
-      text: `Nom: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      html: `<h3>Nouveau message de contact</h3>
-             <p><strong>Nom:</strong> ${name}</p>
-             <p><strong>Email:</strong> ${email}</p>
-             <p><strong>Sujet:</strong> ${subject}</p>
-             <p><strong>Message:</strong> ${message}</p>`
-    });
-    res.json({ ok: true, message: "Votre message a été envoyé avec succès !" });
-  } catch (err) {
-    res.status(500).json({ ok: false, message: "Erreur lors de l'envoi du mail." });
-  }
-});
 
 
 

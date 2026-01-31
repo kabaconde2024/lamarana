@@ -428,8 +428,7 @@ await query(
 );
 
     // Construire le lien de réinitialisation
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-    const resetLink = `${frontendUrl}/reset-password?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
+const frontendUrl = process.env.FRONTEND_URL || 'https://lamarana.onrender.com';    const resetLink = `${frontendUrl}/reset-password?email=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`;
 
     // Envoyer l'email
     const emailResult = await sendPasswordResetEmail(email, user.fullname, resetLink, expiresMinutes);
